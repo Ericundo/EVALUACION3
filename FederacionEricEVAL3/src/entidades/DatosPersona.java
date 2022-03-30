@@ -7,13 +7,13 @@ import java.util.Scanner;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class DatosPersona {
-	private long id;
-	private String nombre;
-	private String telefono;
-	private LocalDate fechaNac;
+public class DatosPersona implements Comparable<DatosPersona>{
+	private static long id;
+	private static String nombre;
+	private static String telefono;
+	private static LocalDate fechaNac;
 
-	private Documentacion nifnie; //Examen 2 Ejercicio 3.2
+	private static Documentacion nifnie; //Examen 2 Ejercicio 3.2
 
 	public DatosPersona(long id, String nombre, String telefono, LocalDate fechaNac) {
 		super();
@@ -41,7 +41,7 @@ public class DatosPersona {
 		this.id = id;
 	}
 
-	public String getNombre() {
+	public  String getNombre() {
 		return nombre;
 	}
 
@@ -49,7 +49,7 @@ public class DatosPersona {
 		this.nombre = nombre;
 	}
 
-	public String getTelefono() {
+	public  String getTelefono() {
 		return telefono;
 	}
 
@@ -57,7 +57,7 @@ public class DatosPersona {
 		this.telefono = telefono;
 	}
 
-	public LocalDate getFechaNac() {
+	public  LocalDate getFechaNac() {
 		return fechaNac;
 	}
 
@@ -65,7 +65,7 @@ public class DatosPersona {
 		this.fechaNac = fechaNac;
 	}
 
-	public Documentacion getNifnie() {
+	public  Documentacion getNifnie() {
 		return nifnie;
 	}
 
@@ -105,19 +105,19 @@ public class DatosPersona {
 			nombre = in.nextLine();
 			valido = Validaciones.validarNombre(nombre);
 			if (!valido)
-				System.out.println("ERROR: El valor introducido para el nombre no es válido. ");
+				System.out.println("ERROR: El valor introducido para el nombre no es vÃ¡lido. ");
 		} while (!valido);
 		do {
-			System.out.println("Introduzca el teléfono de la nueva persona:");
+			System.out.println("Introduzca el telÃ©fono de la nueva persona:");
 			in = new Scanner(System.in);
 			tfn = in.nextLine();
 			valido = Validaciones.validarTelefono(tfn);
 			if (!valido)
-				System.out.println("ERROR: El valor introducido para el teléfono no es válido. ");
+				System.out.println("ERROR: El valor introducido para el telÃ©fono no es vÃ¡lido. ");
 		} while (!valido);
 		System.out.println("Introduzca la fecha de nacimiento de la nueva persona");
 		LocalDate fecha = Utilidades.leerFecha();
-		System.out.println("¿Va a introducir un NIF? (pulse 'S' par SÍ o 'N' para NIE)");
+		System.out.println("Â¿Va a introducir un NIF? (pulse 'S' par SÃ� o 'N' para NIE)");
 		boolean esnif = Utilidades.leerBoolean();
 		Documentacion doc;
 		valido = false;
@@ -128,10 +128,26 @@ public class DatosPersona {
 				doc = NIE.nuevoNIE();
 			valido = doc.validar();
 			if (!valido)
-				System.out.println("ERROR: El documento introducido no es válido.");
+				System.out.println("ERROR: El documento introducido no es vÃ¡lido.");
 		} while (!valido);
 		ret = new DatosPersona(id, nombre, tfn, fecha, doc);
 		return ret;
 	}
+	
+	//Ejercicio 1 30-03-22
+	
+	public String data() {
+		return "" + this.getId() + "|" + this.getNombre() + "|" +  this.getTelefono()+  "|"+  this.getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "|" 
+				+ this.getNifnie().mostrar();
+	}
+
+	@Override
+	public int compareTo(DatosPersona o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+	
 
 }

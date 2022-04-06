@@ -14,58 +14,71 @@ public class Prueba {
 	private LocalDate fecha; // solo fecha
 	private boolean individual; // indica si es individual o no (por equipos)
 	private Lugar lugar;
+	private Patrocinador patrocinador;
 
 	private Colegiado[] arbitraje = new Colegiado[3];
 	private Resultado resultado = null;
 	private Participante[] participantes;
 
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind) {
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.lugar = lugar;
+		this.patrocinador = patrocinador;
 		this.individual = ind;
 	}
 
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Participante[] participantes) {
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind,
+			Participante[] participantes) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.lugar = lugar;
+		this.patrocinador = patrocinador;
 		this.individual = ind;
 		this.participantes = participantes;
 	}
 
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Colegiado[] arbitraje) {
-		this.id = id;
-		this.nombre = nombre;
-		this.fecha = fecha;
-		this.lugar = lugar;
-		this.individual = ind;
-		this.arbitraje = arbitraje;
-	}
-
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Participante[] participantes,
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind,
 			Colegiado[] arbitraje) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.lugar = lugar;
+		this.patrocinador = patrocinador;
+		this.individual = ind;
+		this.arbitraje = arbitraje;
+	}
+
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind,
+			Participante[] participantes, Colegiado[] arbitraje) {
+		this.id = id;
+		this.nombre = nombre;
+		this.fecha = fecha;
+		this.lugar = lugar;
+		this.patrocinador = patrocinador;
 		this.individual = ind;
 		this.participantes = participantes;
 		this.arbitraje = arbitraje;
 	}
 
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Participante[] participantes,
-			Colegiado[] arbitraje, Resultado res) {
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind,
+			Participante[] participantes, Colegiado[] arbitraje, Resultado res) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.lugar = lugar;
+		this.patrocinador = patrocinador;
 		this.individual = ind;
 		this.participantes = participantes;
 		this.arbitraje = arbitraje;
 		this.resultado = res;
+	}
+
+	public Prueba(int i, String string, LocalDate parse, Lugar oviedocentro, boolean b,
+			Participante[] finalistasSanSilvestreFem2020, Colegiado[] arbitrosFinalSanSilvestreFem2020,
+			Resultado resultadoFinalSanSilvestreFem2020) {
 	}
 
 	public Resultado getResultado() {
@@ -124,12 +137,20 @@ public class Prueba {
 		this.lugar = lugar;
 	}
 
+	public Patrocinador getPatrocinador() {
+		return patrocinador;
+	}
+
+	public void setPatrocinador(Patrocinador patrocinador) {
+		this.patrocinador = patrocinador;
+	}
+
 	/**
-	 * Función que establece el equipo arbitral de la prueba (3 colegiados)
+	 * FunciÃ³n que establece el equipo arbitral de la prueba (3 colegiados)
 	 * 
 	 * @param arbitros array de 3 Colegiado que componen el equipo arbitral de la
 	 *                 prueba
-	 * @return true si se estableció con éxito el equipo arbitral de la prueba o
+	 * @return true si se estableciÃ³ con Ã©xito el equipo arbitral de la prueba o
 	 *         false en caso contrario
 	 */
 	public boolean setEquipoArbitral(Colegiado[] arbitros) {
@@ -146,7 +167,7 @@ public class Prueba {
 	/**
 	 * Funcion que indica si hay establecido un equipo arbitral para la prueba
 	 * 
-	 * @return true si sí haya establecido equipo arbitral par la prueba y false en
+	 * @return true si sÃ­ haya establecido equipo arbitral par la prueba y false en
 	 *         caso contrario
 	 */
 	public boolean hayEquipoArbitral() {
@@ -174,10 +195,10 @@ public class Prueba {
 	}
 
 	/***
-	 * Funcion que indica si la prueba está cerrada, es decir, si su resultado es
+	 * Funcion que indica si la prueba estÃ¡ cerrada, es decir, si su resultado es
 	 * definitivo
 	 * 
-	 * @return true si la prueba está cerrada o false en caso contrario
+	 * @return true si la prueba estÃ¡ cerrada o false en caso contrario
 	 */
 	public boolean cerrada() {
 		if (this.resultado != null)
@@ -187,7 +208,7 @@ public class Prueba {
 	}
 
 	/**
-	 * Funcion que establece el resultado definitivo de la prueba, cerrándola. En
+	 * Funcion que establece el resultado definitivo de la prueba, cerrÃ¡ndola. En
 	 * caso de error avisa al usuario por la salida estandar del sistema
 	 * 
 	 * @param r objeto de tipo Resultado que debe ser definitivo
@@ -202,32 +223,37 @@ public class Prueba {
 		}
 	}
 
-	///Examen 6 Ejercicio 4
+	/// Examen 6 Ejercicio 4
 	/***
-	 * Función que devuelve una cadena de caracteres con la siguiente estructura: 
-	 * <idPrueba>”. ”<nombre>” (”<fecha(dd/mm/YYYY)>” en <lugarPrueba>) de tipo “
-	 * <individual/colectiva>“ Si la prueba dispone de equipo arbitral, se mostrarán
-	 * los nombres del equipo arbitral. Además, si está cerrada, se mostrará el
-	 * Resultado de la misma, de esta forma: “Primer puesto: “<idParticipante>”, con
-	 * el dorsal “<dorsal>” por la calle “<calle>” Oro#”<idOro>”.” “Segundo puesto:
-	 * “<idParticipante>”, con el dorsal “<dorsal>” por la calle “<calle>”
-	 * Plata#<idPlata> “Tercer puesto: “<idParticipante>”, con el dorsal “<dorsal>”
-	 * por la calle “<calle> Bronce#<idBronc>
+	 * FunciÃ³n que devuelve una cadena de caracteres con la siguiente estructura:
+	 * <idPrueba>â€�. â€�<nombre>â€� (â€�<fecha(dd/mm/YYYY)>â€� en <lugarPrueba>) de
+	 * tipo â€œ <individual/colectiva>â€œ Si la prueba dispone de equipo arbitral,
+	 * se mostrarÃ¡n los nombres del equipo arbitral. AdemÃ¡s, si estÃ¡ cerrada, se
+	 * mostrarÃ¡ el Resultado de la misma, de esta forma: â€œPrimer puesto:
+	 * â€œ<idParticipante>â€�, con el dorsal â€œ<dorsal>â€� por la calle
+	 * â€œ<calle>â€� Oro#â€�<idOro>â€�.â€� â€œSegundo puesto:
+	 * â€œ<idParticipante>â€�, con el dorsal â€œ<dorsal>â€� por la calle
+	 * â€œ<calle>â€� Plata#<idPlata> â€œTercer puesto: â€œ<idParticipante>â€�, con
+	 * el dorsal â€œ<dorsal>â€� por la calle â€œ<calle> Bronce#<idBronc>
 	 * 
 	 */
 	@Override
 	public String toString() {
 		String ret = "";
-		ret += "" + id + "." + nombre + " (" + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " en " + lugar.getNombre() + ") de tipo " + (this.isIndividual()?"individual":"colectiva")+"\n";
-		if(this.hayEquipoArbitral()) {
+		ret += "" + id + "." + nombre + " (" + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " en "
+				+ lugar.getNombre() + ") de tipo " + (this.isIndividual() ? "individual" : "colectiva") + "\n";
+		if (this.hayEquipoArbitral()) {
 			ret += this.nombresEquipoArbitral();
 		}
-		if(this.cerrada()) {
+		if (this.cerrada()) {
 			Resultado res = this.getResultado();
 			Participante[] podio = res.getPodio();
-			ret += "Primer puesto:"+ podio[0].getId()+", con el dorsal" + podio[0].getDorsal()+" por la calle "+ podio[0].getCalle()+" Oro#"+ res.getPrimero().getId()+"\n";
-			ret += "Segundo puesto:"+ podio[1].getId()+", con el dorsal" + podio[1].getDorsal()+" por la calle "+ podio[1].getCalle()+" Oro#"+ res.getSegundo().getId()+"\n";
-			ret += "Tercer puesto:"+ podio[2].getId()+", con el dorsal" + podio[2].getDorsal()+" por la calle "+ podio[2].getCalle()+" Oro#"+ res.getTercero().getId()+"\n";
+			ret += "Primer puesto:" + podio[0].getId() + ", con el dorsal" + podio[0].getDorsal() + " por la calle "
+					+ podio[0].getCalle() + " Oro#" + res.getPrimero().getId() + "\n";
+			ret += "Segundo puesto:" + podio[1].getId() + ", con el dorsal" + podio[1].getDorsal() + " por la calle "
+					+ podio[1].getCalle() + " Oro#" + res.getSegundo().getId() + "\n";
+			ret += "Tercer puesto:" + podio[2].getId() + ", con el dorsal" + podio[2].getDorsal() + " por la calle "
+					+ podio[2].getCalle() + " Oro#" + res.getTercero().getId() + "\n";
 		}
 		return ret;
 	}
@@ -239,6 +265,7 @@ public class Prueba {
 		long id = -1;
 		String nombre = "";
 		Lugar lugar;
+		Patrocinador patrocinador;
 		boolean valido = false;
 		do {
 			System.out.println("Introduzca el id de la nueva prueba:");
@@ -246,7 +273,7 @@ public class Prueba {
 			id = in.nextInt();
 			valido = Validaciones.validarId(id);
 			if (!valido)
-				System.out.println("ERROR: Valor introducido para el identificador de la prueba inválido.");
+				System.out.println("ERROR: Valor introducido para el identificador de la prueba invÃ¡lido.");
 			else
 				valido = true;
 		} while (!valido);
@@ -257,7 +284,7 @@ public class Prueba {
 			nombre = in.nextLine();
 			valido = Validaciones.validarNombre(nombre);
 			if (!valido)
-				System.out.println("ERROR: Valor introducido para el nombre de la prueba inválido.");
+				System.out.println("ERROR: Valor introducido para el nombre de la prueba invÃ¡lido.");
 			else
 				valido = true;
 		} while (!valido);
@@ -265,7 +292,7 @@ public class Prueba {
 		System.out.println("Introduzca la fecha de la nueva prueba");
 		LocalDate fecha = Utilidades.leerFecha();
 
-		System.out.println("¿Es la nueva prueba de tipo individual?");
+		System.out.println("Â¿Es la nueva prueba de tipo individual?");
 		boolean ind = Utilidades.leerBoolean();
 
 		valido = false;
@@ -280,8 +307,11 @@ public class Prueba {
 				valido = true;
 		} while (!valido);
 		lugar = Lugar.values()[idLugar];
+		System.out.println("Introduzca ahora los datos del patrocinador:");
+		in = new Scanner(System.in);
+		patrocinador = Patrocinador.nuevoPatrocinador();
 
-		ret = new Prueba(id, nombre, fecha, lugar, ind);
+		ret = new Prueba(id, nombre, fecha, lugar, patrocinador, ind);
 		return ret;
 	}
 

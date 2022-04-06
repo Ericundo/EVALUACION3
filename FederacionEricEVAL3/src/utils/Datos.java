@@ -18,6 +18,7 @@ import entidades.NIE;
 import entidades.NIF;
 import entidades.Oro;
 import entidades.Participante;
+import entidades.Patrocinador;
 import entidades.Plata;
 import entidades.Prueba;
 import entidades.Resultado;
@@ -637,6 +638,8 @@ public class Datos {
 			new Competicion(4, "Campeonato Regional Individual", 2021, pruebasCampeonatoRegInd2021),
 			new Competicion(5, "Memorial por víctimas del coronavirus", 2021, pruebasMemorialCoronavirus2021)
 	};
+
+	public static Patrocinador[] PATROCINADOR;
 
 	/***
 	 * Funcion que se le pasa un idPersona y devuelve el objeto DatosPersona asociado o null si no existe

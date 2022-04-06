@@ -1,9 +1,11 @@
 package utils;
 
 import java.text.Normalizer;
+
 import java.text.Normalizer.Form;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -15,6 +17,37 @@ import validaciones.Validaciones;
  * @author luis
  */
 public class Utilidades extends Validaciones {
+	
+	
+	
+//EXAMEN 10 EJERCICIO 1.
+	
+	public static java.time.LocalTime leerHora() {
+		LocalTime ret = null;
+		int hora, min, seg;
+		boolean correcto = false;
+		Scanner in;
+		do {
+			System.out.println("Introduzca un valor para la hora del día (0...23)");
+			in = new Scanner(System.in, "ISO-8859-1");
+			hora = in.nextInt();
+			System.out.println("Introduzca un valor para los minutos (0...59)");
+			in = new Scanner(System.in, "ISO-8859-1");
+			min = in.nextInt();
+			System.out.println("Introduzca un valor para los segundos (0...59)");
+			in = new Scanner(System.in, "ISO-8859-1");
+			seg = in.nextInt();
+
+			try {
+				ret = LocalTime.of(hora, min, seg);
+				correcto = true;
+			} catch (Exception e) {
+				System.out.println("hora introducida incorrecta.");
+				correcto = false;
+			}
+		} while (!correcto);
+		return ret;
+	}
 
 	/**
 	 * Función que pide al usuario que introduzca 's' o 'S' para Sí o 'n' o 'N' para

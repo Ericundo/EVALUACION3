@@ -2,83 +2,84 @@ package entidades;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Scanner;
 
+import dao.PatrocinadorDAO;
+import utils.ConexBD;
 import utils.Utilidades;
 import validaciones.Validaciones;
 
-public class Prueba {
+public class Prueba implements Comparable<Prueba>{
 	private long id;
 	private String nombre;
 	private LocalDate fecha; // solo fecha
 	private boolean individual; // indica si es individual o no (por equipos)
 	private Lugar lugar;
-	private Patrocinador patrocinador;
 
 	private Colegiado[] arbitraje = new Colegiado[3];
 	private Resultado resultado = null;
 	private Participante[] participantes;
 
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind) {
+	/// Examen 10 Ejercicio 3
+	private Patrocinador patrocinador;
+
+	/// Examen 10 Ejercicio 3
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Patrocinador p) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.lugar = lugar;
-		this.patrocinador = patrocinador;
 		this.individual = ind;
+		this.patrocinador = p;
 	}
 
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind,
-			Participante[] participantes) {
+//	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind) {
+//		this.id = id;
+//		this.nombre = nombre;
+//		this.fecha = fecha;
+//		this.lugar = lugar;
+//		this.individual = ind;
+//	}
+
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Participante[] participantes) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.lugar = lugar;
-		this.patrocinador = patrocinador;
 		this.individual = ind;
 		this.participantes = participantes;
 	}
 
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind,
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Colegiado[] arbitraje) {
+		this.id = id;
+		this.nombre = nombre;
+		this.fecha = fecha;
+		this.lugar = lugar;
+		this.individual = ind;
+		this.arbitraje = arbitraje;
+	}
+
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Participante[] participantes,
 			Colegiado[] arbitraje) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.lugar = lugar;
-		this.patrocinador = patrocinador;
-		this.individual = ind;
-		this.arbitraje = arbitraje;
-	}
-
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind,
-			Participante[] participantes, Colegiado[] arbitraje) {
-		this.id = id;
-		this.nombre = nombre;
-		this.fecha = fecha;
-		this.lugar = lugar;
-		this.patrocinador = patrocinador;
 		this.individual = ind;
 		this.participantes = participantes;
 		this.arbitraje = arbitraje;
 	}
 
-	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, Patrocinador patrocinador, boolean ind,
-			Participante[] participantes, Colegiado[] arbitraje, Resultado res) {
+	public Prueba(long id, String nombre, LocalDate fecha, Lugar lugar, boolean ind, Participante[] participantes,
+			Colegiado[] arbitraje, Resultado res) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fecha = fecha;
 		this.lugar = lugar;
-		this.patrocinador = patrocinador;
 		this.individual = ind;
 		this.participantes = participantes;
 		this.arbitraje = arbitraje;
 		this.resultado = res;
-	}
-
-	public Prueba(int i, String string, LocalDate parse, Lugar oviedocentro, boolean b,
-			Participante[] finalistasSanSilvestreFem2020, Colegiado[] arbitrosFinalSanSilvestreFem2020,
-			Resultado resultadoFinalSanSilvestreFem2020) {
 	}
 
 	public Resultado getResultado() {
@@ -137,10 +138,12 @@ public class Prueba {
 		this.lugar = lugar;
 	}
 
+	/// Examen 10 Ejercicio 3
 	public Patrocinador getPatrocinador() {
 		return patrocinador;
 	}
 
+	/// Examen 10 Ejercicio 3
 	public void setPatrocinador(Patrocinador patrocinador) {
 		this.patrocinador = patrocinador;
 	}
@@ -226,22 +229,23 @@ public class Prueba {
 	/// Examen 6 Ejercicio 4
 	/***
 	 * FunciÃ³n que devuelve una cadena de caracteres con la siguiente estructura:
-	 * <idPrueba>â€�. â€�<nombre>â€� (â€�<fecha(dd/mm/YYYY)>â€� en <lugarPrueba>) de
-	 * tipo â€œ <individual/colectiva>â€œ Si la prueba dispone de equipo arbitral,
-	 * se mostrarÃ¡n los nombres del equipo arbitral. AdemÃ¡s, si estÃ¡ cerrada, se
-	 * mostrarÃ¡ el Resultado de la misma, de esta forma: â€œPrimer puesto:
-	 * â€œ<idParticipante>â€�, con el dorsal â€œ<dorsal>â€� por la calle
-	 * â€œ<calle>â€� Oro#â€�<idOro>â€�.â€� â€œSegundo puesto:
-	 * â€œ<idParticipante>â€�, con el dorsal â€œ<dorsal>â€� por la calle
-	 * â€œ<calle>â€� Plata#<idPlata> â€œTercer puesto: â€œ<idParticipante>â€�, con
-	 * el dorsal â€œ<dorsal>â€� por la calle â€œ<calle> Bronce#<idBronc>
+	 * <idPrueba>â€�. â€�<nombre>â€� (â€�<fecha(dd/mm/YYYY)>â€� en <lugarPrueba>) de tipo â€œ
+	 * <individual/colectiva>â€œ Si la prueba dispone de equipo arbitral, se mostrarÃ¡n
+	 * los nombres del equipo arbitral. AdemÃ¡s, si estÃ¡ cerrada, se mostrarÃ¡ el
+	 * Resultado de la misma, de esta forma: â€œPrimer puesto: â€œ<idParticipante>â€�, con
+	 * el dorsal â€œ<dorsal>â€� por la calle â€œ<calle>â€� Oro#â€�<idOro>â€�.â€� â€œSegundo puesto:
+	 * â€œ<idParticipante>â€�, con el dorsal â€œ<dorsal>â€� por la calle â€œ<calle>â€�
+	 * Plata#<idPlata> â€œTercer puesto: â€œ<idParticipante>â€�, con el dorsal â€œ<dorsal>â€�
+	 * por la calle â€œ<calle> Bronce#<idBronc>
 	 * 
 	 */
 	@Override
 	public String toString() {
 		String ret = "";
 		ret += "" + id + "." + nombre + " (" + fecha.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " en "
-				+ lugar.getNombre() + ") de tipo " + (this.isIndividual() ? "individual" : "colectiva") + "\n";
+				+ lugar.getNombre() + ") de tipo " + (this.isIndividual() ? "individual" : "colectiva") +
+				// Examen 10 Ejercicio 3, parte A
+				"patrocinada por: " + this.patrocinador.getNombre() + "\n";
 		if (this.hayEquipoArbitral()) {
 			ret += this.nombresEquipoArbitral();
 		}
@@ -258,14 +262,13 @@ public class Prueba {
 		return ret;
 	}
 
-	// Examen 1 Ejercicio 2, parte B
+	// Examen 1 Ejercicio 3, parte A
 	public static Prueba nuevaPrueba() {
 		Prueba ret = null;
 		Scanner in;
 		long id = -1;
 		String nombre = "";
 		Lugar lugar;
-		Patrocinador patrocinador;
 		boolean valido = false;
 		do {
 			System.out.println("Introduzca el id de la nueva prueba:");
@@ -307,12 +310,25 @@ public class Prueba {
 				valido = true;
 		} while (!valido);
 		lugar = Lugar.values()[idLugar];
-		System.out.println("Introduzca ahora los datos del patrocinador:");
-		in = new Scanner(System.in);
-		patrocinador = Patrocinador.nuevoPatrocinador();
-
-		ret = new Prueba(id, nombre, fecha, lugar, patrocinador, ind);
+		////Examen 10 ejercicio 12
+		System.out.println("Introduzca los datos del patrocinador de la prueba");
+		System.out.println("Pulse S para introducir los datos de un nuevo patrocinador o N para elegir un patrocinador ya existente en la BD:");
+		boolean nuevoPatrocinador = Utilidades.leerBoolean();
+		Patrocinador patrocinador;
+		PatrocinadorDAO pDAO = new PatrocinadorDAO(ConexBD.establecerConexion());
+		if (nuevoPatrocinador)
+			patrocinador = Patrocinador.nuevoPatrocinador();
+		else 
+			patrocinador = pDAO.seleccionarUnoYaExistente(); /// Examen 10 Ejercicio 12
+		
+		ret = new Prueba(id, nombre, fecha, lugar, ind, patrocinador);
 		return ret;
+	}
+
+	@Override
+	public int compareTo(Prueba pr) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

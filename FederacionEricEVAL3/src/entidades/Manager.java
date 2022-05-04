@@ -5,8 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+
+import dao.operacionesCRUD;
+import utils.ConexBD;
 import utils.Datos;
 import validaciones.Validaciones;
 
@@ -31,6 +38,10 @@ public class Manager {
 		this.telefono = telefono;
 		this.direccion = direccion;
 		this.persona = dp;
+	}
+
+	public Manager() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getId() {
@@ -59,6 +70,10 @@ public class Manager {
 
 	public DatosPersona getPersona() {
 		return this.persona;
+	}
+
+	public void setPersona(DatosPersona persona) {
+		this.persona = persona;
 	}
 
 	// Examen 5 Ejercicio 4
@@ -175,4 +190,6 @@ public class Manager {
 			System.out.println("Se ha producido una Exception" + e.getMessage());
 		}
 	}
+
+	
 }

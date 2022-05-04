@@ -28,8 +28,8 @@ public class Equipo extends Participante {
 		this.atletas = atletas;
 	}
 
-	public Equipo(long idParticipante, Equipo e, int dorsal, char calle) {
-		super(idParticipante, dorsal, calle);
+	public Equipo(long idParticipante, Equipo e, int dorsal, char calle, Tiempo tiempo, boolean penalizacion, String nombre) {
+		super(idParticipante, dorsal, calle, tiempo, penalizacion, nombre);
 		this.idEquipo = e.idEquipo;
 		this.nombre = e.nombre;
 		this.anioinscripcion = e.anioinscripcion;

@@ -1,19 +1,10 @@
 package entidades;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import utils.ConexBD;
-
 //Examen 1 Ejercicio 1
 public enum Lugar {
-	GIJONMESTAS(1, "Las Mestas", "Gijon", true), 
-	GIJONCENTRO(2, "Centro ciudad", "Gijon", true),
-	OVIEDOSANFRANCISCO(3, "Parque San Francisco", "Oviedo", true), 
-	AVILESPUERTO(4, "Puerto", "Aviles", true),
-	AVILESPABELLON(5, "Pabellon deportivo Aviles", "Aviles", false), 
-	OVIEDOCENTRO(6, "Centro ciudad", "Oviedo", true);
+	GIJONMESTAS(1, "Las Mestas", "Gijon", true), GIJONCENTRO(2, "Centro ciudad", "Gijon", true),
+	OVIEDOSANFRANCISCO(3, "Parque San Francisco", "Oviedo", true), AVILESPUERTO(4, "Puerto", "Aviles", true),
+	AVILESPABELLON(5, "Pabellon deportivo Aviles", "Aviles", false), OVIEDOCENTRO(6, "Centro ciudad", "Oviedo", true);
 
 	private int id;
 	private String nombre;
@@ -50,6 +41,5 @@ public enum Lugar {
 	public boolean isAirelibre() {
 		return airelibre;
 	}
-
 
 }

@@ -38,6 +38,14 @@ public class Atleta extends Participante {
 		this.peso = peso;
 		this.persona = dp;
 	}
+	
+	public Atleta(long idParticipante, Atleta a, int dorsal, char calle) {
+		super();
+		this.idAtleta = a.idAtleta;
+		this.altura = a.altura;
+		this.peso = a.peso;
+		this.persona = Datos.buscarPersonaPorId(a.idAtleta);
+	}
 
 	public Atleta(long idParticipante, Atleta a, int dorsal, char calle, Tiempo tiempo, boolean penalizacion, String otros) {
 		super(idParticipante, dorsal, calle, tiempo, penalizacion, otros);

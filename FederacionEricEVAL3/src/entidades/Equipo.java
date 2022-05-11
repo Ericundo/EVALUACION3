@@ -27,6 +27,16 @@ public class Equipo extends Participante {
 		this.manager = manager;
 		this.atletas = atletas;
 	}
+	
+	public Equipo(long idParticipante, Equipo e, int dorsal, char calle) {
+		super();
+		this.idEquipo = e.idEquipo;
+		this.nombre = e.nombre;
+		this.anioinscripcion = e.anioinscripcion;
+		this.manager = e.manager;
+		this.atletas = e.atletas;
+	}
+	
 
 	public Equipo(long idParticipante, Equipo e, int dorsal, char calle, Tiempo tiempo, boolean penalizacion, String nombre) {
 		super(idParticipante, dorsal, calle, tiempo, penalizacion, nombre);

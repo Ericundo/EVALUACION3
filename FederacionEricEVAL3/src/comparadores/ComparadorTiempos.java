@@ -10,7 +10,7 @@ import utils.Datos;
 public class ComparadorTiempos implements Comparator<Tiempo> {
 
 	public int compare(Tiempo t1, Tiempo t2) {
-		return 0;
+		return t1.compareTo(t2);
 	}
 
 }

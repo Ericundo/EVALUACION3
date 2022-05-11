@@ -2,6 +2,7 @@ package validaciones;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -250,5 +251,15 @@ public class Validaciones {
 
 	public static boolean validarCalle(char calle) {
 		return  Character.isLetter(calle);
+	}
+
+	public static boolean validarNombrePrueba(String nombre) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public static boolean validarFechaNuevaPrueba(Date fecha) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
